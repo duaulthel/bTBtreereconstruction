@@ -11,8 +11,6 @@ library(tidyverse)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 samp <- "B1"
 
 nb_scheme <- ifelse(samp=="B1", 6, 1)
