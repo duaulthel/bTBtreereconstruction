@@ -12,8 +12,6 @@ library(MASS)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Estimate number of sequences per tree
 nb <- NULL
 for (samp in c("A1", "A2", "B1", "B2", "S1","S2","S3","S4","S5","S6")){
