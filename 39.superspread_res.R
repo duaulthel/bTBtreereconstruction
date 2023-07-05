@@ -11,8 +11,6 @@ library(ggplot2)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #import results from every method
 out <- NULL
 for (i in c("A1","B1","B2","S1","S4")){
