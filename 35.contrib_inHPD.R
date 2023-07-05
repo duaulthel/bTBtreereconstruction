@@ -12,9 +12,6 @@ library(tidytext)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
-
 #import parameter results from every method
 out <- NULL
 for (i in c("B1", "A1", "S4")){
