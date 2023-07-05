@@ -11,9 +11,6 @@ library(MASS)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
-
 #import parameter results from every method
 out <- NULL
 for (i in c("A1", "S4")){
