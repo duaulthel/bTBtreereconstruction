@@ -5,7 +5,7 @@ library(tidyverse)
 
 #------------------------------------
 ##Description:
-##Estimate mean number of secondary cases 
+##Estimate number of transmission events due to each host-species 
 ##Comparison with the induced subtree
 
 #------------------------------------
