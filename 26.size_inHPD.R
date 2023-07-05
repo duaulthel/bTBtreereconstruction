@@ -11,8 +11,6 @@ library(ggplot2)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Estimate number of sequences per set of cases
 nb <- NULL
 for (samp in c("B1", "S1", "S4")){
