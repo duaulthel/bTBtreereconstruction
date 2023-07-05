@@ -13,8 +13,6 @@ library(adegenet)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #start of the outbreak
 tstart <- as.Date("01/01/07", "%d/%m/%y")
 
