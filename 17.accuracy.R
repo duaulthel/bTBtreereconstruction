@@ -11,8 +11,6 @@ library(ggplot2)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #import accuracy results from every method
 samp <- "B1"
 
