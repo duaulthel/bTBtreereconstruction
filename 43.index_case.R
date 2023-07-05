@@ -11,11 +11,9 @@ library(lme4)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #import index case results from every method
 out <- NULL
-for (i in c("A1","B1")){
+for (i in c("B2","B1")){
   samp <- i
   out_s1 <- read_csv(paste0("./Index_case/seqTrack_",samp,"_index.csv"))
   out_s1$method <- "seqTrack"
@@ -52,7 +50,7 @@ out$scenario <- factor(out$scenario, levels=c("A", "T", "SB", "T+SB", "SW", "T+S
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "A1" ~ "CNTrW",
+out$scen_sim <- case_when(out$scen_sim == "B2" ~ "BTrW",
                           out$scen_sim == "B1" ~ "CTrW")
 
 #Random effect variable
@@ -69,35 +67,6 @@ tab <- tab %>% group_by(scen_sim, scenario, method) %>%
 
 tab <- tab %>% pivot_wider(names_from=scen_sim, values_from=prop)
 #write_csv(tab, "res.csv")
-
-#------------------------------------
-#------------------------------------
-#Select transmission scenario CTrW only
-test <- out %>% filter(scen_sim=="CTrW") 
-
-#Implement the GLM on the host contribution results
-model <- glmer(index 
-             ~ method + method:scenario +(1|sim),
-             data=test,
-             family=binomial)
-
-# Warning message:
-#   In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
-#                  Model is nearly unidentifiable: large eigenvalue ratio
-#                - Rescale variables?
-
-
-summary(model) #and to get p-value
-
-#Estimate 95% confidence interval
-cc <- confint(model,parm="beta_",method="Wald")
-ctab <- cbind(est=fixef(model),cc)
-
-#Exponentiate results to get Odds Ratio
-rtab <- exp(ctab)
-
-#Create data.frame with results
-tab <- as.data.frame(round(rtab, 2))
 
 #------------------------------------
 #Select transmission scenario CTrW only
