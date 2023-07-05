@@ -10,8 +10,6 @@ library(broom)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #import accuracy results from every method
 out <- NULL
 for (i in c("S1","S4")){
