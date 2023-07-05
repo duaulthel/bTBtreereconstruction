@@ -13,7 +13,7 @@ library(ggplot2)
 #------------------------------------
 #import results from every method
 out <- NULL
-for (i in c("A1","B1","B2","S1","S4")){
+for (i in c("A1","B1","S1","S4")){
   samp <- i
   out_s1 <- read_csv(paste0("./Super-spreader/seqTrack_",samp,"_ssp.csv"))
   out_s1$method <- "seqTrack"
@@ -51,7 +51,6 @@ out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 #Correct names for transmission scenarios
 out$scen_sim <- case_when(out$scen_sim == "A1" ~ "Dead-end host",
                           out$scen_sim == "B1" ~ "Reference",
-                          out$scen_sim == "B2" ~ "Badger index",
                           out$scen_sim == "S1" ~ "Single-host",
                           out$scen_sim == "S4" ~ "High mutation rate")
 
