@@ -6,6 +6,7 @@ library(broom)
 library(MASS)
 #------------------------------------
 ##Description:
+##Alternative transmission scenarios
 ##Negative Binomial GLMM on the host contribution indicator
 ##Comparison with reference tree
 
