@@ -12,9 +12,6 @@ library(lme4)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
-
 #import host contribution results from every method
 
 samp <- "B1"
