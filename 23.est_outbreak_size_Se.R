@@ -12,9 +12,6 @@ library(MASS)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
-
 #import tree size results from every method
 out <- NULL
 for (i in c("S1","S4")){
