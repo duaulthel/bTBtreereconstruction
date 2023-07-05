@@ -12,8 +12,6 @@ library(lme4)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Estimate number of sequences per set of cases
 
 samp <- "B1"
