@@ -15,8 +15,6 @@ library(lattice)
 
 #------------------------------------
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Transmission scenario
 samp <- "B1"
 
