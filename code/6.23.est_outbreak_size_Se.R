@@ -7,6 +7,7 @@ library(MASS)
 
 #------------------------------------
 ##Description:
+##Alternative transmission scenarios
 ##Negative Binomial GLMM on the outbreak size indicator
 ##Comparison with subtree size
 
