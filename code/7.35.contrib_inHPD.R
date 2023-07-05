@@ -7,7 +7,7 @@ library(tidytext)
 
 #------------------------------------
 ##Description:
-##Estimate HPD interval
+##Estimate HPD interval for host contribution
 ##Comparison with reference tree
 
 #------------------------------------
