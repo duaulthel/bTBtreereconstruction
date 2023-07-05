@@ -6,7 +6,8 @@ library(broom)
 library(MASS)
 #------------------------------------
 ##Description:
-##Negetive Binomial GLM on the host contribution indicator
+##Alternative transmission scenarios
+##Negative Binomial GLM on the host contribution indicator
 ##Comparison with induced subtree 
 
 #------------------------------------
