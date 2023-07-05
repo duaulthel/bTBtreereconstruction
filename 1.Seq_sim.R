@@ -15,8 +15,6 @@ library(tidyverse)
 #1. Get parameters needed to simulate sequences.
 
 #------------------------------------
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Transmission scenario considered
 samp <- "B1"
 
