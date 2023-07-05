@@ -6,7 +6,8 @@ library(broom)
 library(MASS)
 
 #------------------------------------
-##Description:
+##Description: 
+##Alternative transmission scenarios
 ##Negative Binomial GLMM on the outbreak size indicator
 ##Comparison with reference tree size
 
