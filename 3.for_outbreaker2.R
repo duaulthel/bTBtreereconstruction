@@ -13,9 +13,6 @@ library(fitdistrplus)
 
 #------------------------------------
 #------------------------------------
-
-setwd("C:/Thèse_ANSES/codes_R/Ttrees_ref")
-
 #Transmission scenario considered
 samp <- "A1"
 
