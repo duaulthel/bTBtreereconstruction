@@ -6,7 +6,8 @@ library(broom)
 
 #------------------------------------
 ##Description:
-##Binomial GLM on the accuracy indicator for the sensitivity analysis
+##Alternative transmission scenarios
+##Binomial GLM on the accuracy indicator
 
 #------------------------------------
 #------------------------------------
