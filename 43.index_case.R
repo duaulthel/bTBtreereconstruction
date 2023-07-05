@@ -69,8 +69,8 @@ tab <- tab %>% pivot_wider(names_from=scen_sim, values_from=prop)
 #write_csv(tab, "res.csv")
 
 #------------------------------------
-#Select transmission scenario CTrW only
-test <- out %>% filter(scen_sim=="CNTrW") 
+#Select transmission scenario BTrW only
+test <- out %>% filter(scen_sim=="BTrW") 
 
 #Implement the GLM on the host contribution results
 model <- glm(index 
