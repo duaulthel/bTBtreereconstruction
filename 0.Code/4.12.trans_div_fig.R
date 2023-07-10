@@ -1,21 +1,21 @@
 rm(list=ls())
 #------------------------------------
 #package
-library(tidyverse)
-library(ggplot2)
+library(tidyverse) #version 1.3.0
+library(ggplot2) #version 3.3.5
 
 #------------------------------------
 ##Description:
 ##Summarize genetic diversity in simulated data:
 ##>Proportion of unique sequences
 ##>Mean transmission divergence
-##>Figure with number of SNPs separating transmission pairs
+##>Figure with number of SNPs separating transmission pairs (S1 Fig)
 
 #------------------------------------
 #------------------------------------
 #Get results from trans_divergence code
 out <- NULL
-for (i in c("A1","B1","B2","S1","S4")){
+for (i in c("A1","B1","B2","S1","S4")){ #B1 (reference scenario), A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
   samp <- i
   out_t1 <- read_csv(paste0("./Trans_div/trans_div_",samp,".csv"))
   out <- rbind(out,out_t1)
@@ -68,13 +68,13 @@ out$dist_gen <- as.character(out$dist_gen)
 out$scen_sim <- factor(out$scen_sim, levels=c("Reference", "High mutation rate",
                                               "Single-host", "Dead-end host", "Badger index"))
 
-(A <- ggplot(data=out,aes(x=dist_gen, y=nb))+
+ggplot(data=out,aes(x=dist_gen, y=nb))+
     geom_boxplot(width=.5)+
     facet_grid(~ scen_sim)+
     theme_bw(base_size=12)+
     labs(x="Genetic distance between transmission pairs", 
-    y="Proportion of transmission pairs"))
+    y="Proportion of transmission pairs")
 
 
-ggsave("Trans_div.tiff",device="tiff", dpi="print", width=17, height=10, units="cm",  compression="lzw", scale=1)
+ggsave("Trans_div.tiff",device="tiff", dpi="print", width=17, height=10, units="cm",  compression="lzw", scale=1) #S1 Fig
 
