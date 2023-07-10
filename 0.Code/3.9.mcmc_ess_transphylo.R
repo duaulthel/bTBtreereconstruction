@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(coda)
+library(tidyverse) #version 1.3.0
+library(coda) #version 0.19-4
 
 #------------------------------------
 ##Description:
@@ -15,12 +15,12 @@ library(coda)
 
 #------------------------------------
 #Transmission scenario
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 #Number of sampling schemes
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
-for (j in 1:30){#trees that converged
+for (j in 1:30){ #change to only trees that converged
   
   out_conv <- NULL
   sim <- paste0(samp,"_",j)
