@@ -1,21 +1,21 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(ggplot2)
+library(tidyverse) #version 1.3.0
+library(ggplot2) #version 3.3.5
 
 #------------------------------------
 ##Description:
-##Estimate 95%HPD interval for outbreak size
+##Estimate 95%HPD interval for outbreak size (Fig 3, 5 and 7 in article)
 ##Comparison with reference tree size
 
 #------------------------------------
 #------------------------------------
 #Estimate number of sequences per set of cases
 nb <- NULL
-for (samp in c("B1", "S1", "S4")){
+for (samp in c("B1", "S1", "S4")){ #B1 (reference scenario), S1 (single-host) and S4 (high mutation rate)
   a <- substr(samp, 1, 1)
-  nb_scheme <- ifelse(samp=="B1", 6, 1)
+  nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
   for (j in 1:30){ #all trees in transmission scenarios
     for (i in 1:nb_scheme){ #all sampling schemes
       seq <- read_csv(paste0("./seq_",a,"/seq_",samp,"_",j,"_",i,".csv"))
@@ -28,7 +28,7 @@ for (samp in c("B1", "S1", "S4")){
 
 #import parameter results from every method
 out <- NULL
-for (samp in c("B1", "S1", "S4")){
+for (samp in c("B1", "S1", "S4")){ #B1 (reference scenario), S1 (single-host) and S4 (high mutation rate)
   
   out_o1 <- read_csv(paste0("./mcmc/outbreaker_",samp,"_mcmc.csv"))
   out_o1$method <- "outbreaker2"
@@ -74,9 +74,9 @@ out$scenario <- factor(out$scenario, levels=c("Reference", "T", "SB", "T+SB", "S
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "B1" ~ "CTrW",
-                          out$scen_sim == "S1" ~ "Oc",
-                          out$scen_sim == "S4" ~ "CTrW_H")
+out$scen_sim <- case_when(out$scen_sim == "B1" ~ "CTrW", #meaning cattle index and wild boars that transmit
+                          out$scen_sim == "S1" ~ "Oc", #meaning only cattle
+                          out$scen_sim == "S4" ~ "CTrW_H") #meaning cattle index, wild boars that transmit and high rate
 
 
 #Is the real contribution in the 95%HPD?
@@ -96,39 +96,39 @@ strans <- c("Underestimation" = "steelblue",
 fig_1 <- out %>% filter(scen_sim=="CTrW")
 
 
-(A <- ggplot(data=fig_1)+
+A <- ggplot(data=fig_1)+
     geom_errorbar(aes(y=reorder(sim, real_size), xmin=est_size_sup, xmax=est_size_inf, color=correct))+
     geom_point(aes(y=reorder(sim, real_size), x= real_size, color = correct))+
     facet_grid(scenario~method)+
     scale_x_log10()+
     scale_color_manual(name="Estimation", values=strans)+
     theme_bw(base_size=11)+
-    labs(x="Number of hosts", y=""))
+    labs(x="Number of hosts", y="")
 
 A + theme(axis.text.y=element_blank(),  
           axis.ticks.y=element_blank(),
           legend.position="bottom")
 
-ggsave("Within_size.tiff",device="tiff", dpi="print", width=17, height=22, units="cm",  compression="lzw", scale=1)
+ggsave("Within_size.tiff",device="tiff", dpi="print", width=17, height=22, units="cm",  compression="lzw", scale=1) #Fig 3
 
 #------------------------------------
 #Select alternative transmission scenarios 
 fig_2 <- out %>% filter(scen_sim=="CTrW_H") #either CTrW_H or Oc
 
 
-(A <- ggplot(data=fig_2)+
+A <- ggplot(data=fig_2)+
     geom_errorbar(aes(y=reorder(sim, real_size), xmin=est_size_sup, xmax=est_size_inf, color=correct))+
     geom_point(aes(y=reorder(sim, real_size), x= real_size, color = correct))+
     facet_grid(~method)+
     scale_x_log10()+
     scale_color_manual(name="Estimation", values=strans)+
     theme_bw(base_size=11)+
-    labs(x="Number of hosts", y=""))
+    labs(x="Number of hosts", y="")
 
 A + theme(axis.text.y=element_blank(),  
           axis.ticks.y=element_blank(),
           legend.position="bottom")
 
 
-ggsave("Within_size_high.tiff",device="tiff", dpi="print", width=17, height=9, units="cm",  compression="lzw", scale=1)
+ggsave("Within_size_high.tiff",device="tiff", dpi="print", width=17, height=9, units="cm",  compression="lzw", scale=1) #Fig 5 or 7
 
