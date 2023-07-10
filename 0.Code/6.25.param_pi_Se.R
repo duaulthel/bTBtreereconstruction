@@ -1,13 +1,13 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(broom)
-library(MASS)
+library(tidyverse) #version 1.3.0
+library(broom) #version 0.7.2
+library(MASS) #version 7.3-53
 
 #------------------------------------
 ##Description: 
-##Alternative transmission scenarios
+##Alternative transmission scenarios: S1 (single-host) and S4 (high mutation rate)
 ##Negative Binomial GLMM on the outbreak size indicator
 ##Comparison with reference tree size
 
@@ -15,7 +15,7 @@ library(MASS)
 #------------------------------------
 #Estimate number of sequences per tree
 nb <- NULL
-for (samp in c("S1","S4")){
+for (samp in c("S1","S4")){ #S1 (single-host) and S4 (high mutation rate)
   a <- substr(samp, 1, 1)
   for (j in 1:30){
       seq <- read_csv(paste0("./seq_",a,"/seq_",samp,"_",j,"_1.csv"))
@@ -27,7 +27,7 @@ for (samp in c("S1","S4")){
 
 #import parameter results from every method
 out <- NULL
-for (i in c("S1","S4")){
+for (i in c("S1","S4")){ S1 (single-host) and S4 (high mutation rate)
   samp <- i
   
   out_o1 <- read_csv(paste0("./mcmc/outbreaker_",samp,"_mcmc.csv"))
@@ -61,8 +61,8 @@ out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc",
-                          out$scen_sim == "S4" ~ "CTrW_H")
+out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc", #meaning only cattle
+                          out$scen_sim == "S4" ~ "CTrW_H") #meaning cattle index, wild boars that transmit and high mutation rate
                           
 #Write output for figure outbreak size
 #write_csv(out, "res_outbreak_size_pi_Se.csv")
@@ -78,7 +78,7 @@ model <- glm.nb(est_size
 
 summary(model) #and to get p-value
 
-#Create data.frame with results
+#Create data.frame with results (S11 Table)
 all_meth <- tidy(model, exponentiate = TRUE) %>% 
   mutate(IRR=round(estimate, 2),
          p.value=ifelse(p.value<0.001, "<0.001", round(p.value,3))) 
