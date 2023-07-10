@@ -1,10 +1,10 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(phylotools)
-library(ape)
-library(outbreaker2)
+library(tidyverse) #version 1.3.0
+library(phylotools) #version 0.7-70
+library(ape) #version 5.4-1
+library(outbreaker2) #version 1.1.2
 
 #------------------------------------
 ##Description:
@@ -13,13 +13,13 @@ library(outbreaker2)
 #------------------------------------
 #------------------------------------
 #Transmission scenario
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 #Number of reference tree considered
-j <- 1
+j <- 1 #tree considered: number out of 30
 
 #Number of sampling schemes
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
 #Generation and sampling distributions
 distr_gen <- read_csv(paste0("./samp_",substr(samp,1,1),"/For_outbreaker/generation_time_",samp,"_",j,".csv")) 
