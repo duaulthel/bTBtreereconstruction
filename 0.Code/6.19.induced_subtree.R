@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(igraph)
+library(tidyverse) #version 1.3.0
+library(igraph) #version 1.2.6
 
 #------------------------------------
 ##Description:
@@ -11,12 +11,12 @@ library(igraph)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 
 #------------------------------------
 
-for (j in 1:30){#all trees in transmission scenario
+for (j in 1:30){ #all trees in transmission scenario
   
   #reference tree
   Ttree <- read_csv(paste0("./Ttrees_",substr(ref_tree,1,1),"/Ttree_det_",ref_tree,"_",j,".csv")) 
@@ -52,7 +52,7 @@ for (j in 1:30){#all trees in transmission scenario
                             sp_infected == "cattle", 1,0),
            sampled_inf=ifelse(sp_infector == "boar" & tremoved_inf >= 60 |
                                 sp_infector == "badger" & tremoved_inf >= 60 |
-                                sp_infector == "cattle", 1,0)) 
+                                sp_infector == "cattle", 1,0)) #60 is the number of months from Jan 2007 until Jan 2012
   
   #Remove unsampled infected hosts that did not transmit
   presence <- subtree_T %>% group_by(child) %>%
