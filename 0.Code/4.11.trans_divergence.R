@@ -1,12 +1,12 @@
 rm(list=ls())
 #------------------------------------
 #package
-library(ape)
-library(phylotools)
-library(lubridate)
-library(tidyverse)
-library(adegenet)
-library(reshape2)
+library(ape) #version 5.4-1
+library(phylotools) #version 0.7-70
+library(lubridate) #version 1.7.9.2
+library(tidyverse) #version 1.3.0
+library(adegenet) #version 2.1.3
+library(reshape2) #version 1.4.4
 
 #------------------------------------
 ##Description:
@@ -17,9 +17,9 @@ library(reshape2)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
-for (j in 1:30){#all trees in the transmission scenario
+for (j in 1:30){ #all trees in the transmission scenario
   sim <- paste0(samp,"_",j) #name of reference tree
   
   #reference tree
@@ -73,7 +73,8 @@ for (j in 1:30){#all trees in the transmission scenario
     prev <- read_csv(paste0("trans_div_",samp,".csv"))
     tab_dist <- rbind(prev, tab_dist)
     write_csv(tab_dist, paste0("trans_div_",samp,".csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(tab_dist, paste0("trans_div_",samp,".csv"))
   }
 }
