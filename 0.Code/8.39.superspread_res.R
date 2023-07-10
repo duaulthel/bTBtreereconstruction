@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(ggplot2)
+library(tidyverse) #version 1.3.0
+library(ggplot2) #version 3.3.5
 
 #------------------------------------
 ##Description:
@@ -13,7 +13,7 @@ library(ggplot2)
 #------------------------------------
 #import results from every method
 out <- NULL
-for (i in c("A1","B1","S1","S4")){
+for (i in c("A1","B1","S1","S4")){ #B1 (reference scenario) or A1 (dead-end), S1 (single-host), S4 (high mutation rate)
   samp <- i
   out_s1 <- read_csv(paste0("./Super-spreader/seqTrack_",samp,"_ssp.csv"))
   out_s1$method <- "seqTrack"
