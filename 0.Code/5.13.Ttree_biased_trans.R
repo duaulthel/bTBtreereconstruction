@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(igraph)
+library(tidyverse) #version 1.3.0
+library(igraph) #version 1.2.6
 
 #------------------------------------
 ##Description:
@@ -12,10 +12,10 @@ library(igraph)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 
-for (j in 1:30){#all trees in the transmission scenario
+for (j in 1:30){ #all trees in the transmission scenario
   
   #reference tree
   Ttree <- read_csv(paste0("./Ttrees_",substr(samp,1,1),"/Ttree_",samp,"_",j,".csv")) 
@@ -58,7 +58,7 @@ for (j in 1:30){#all trees in the transmission scenario
     filter(sp_infector == "boar" & tremoved_inf >= 60 |
              sp_infector == "badger" & tremoved_inf >= 60 |
              sp_infector == "cattle") %>% slice_head(n=1) %>%
-    select(child, trans)%>% rename(trans_2=trans)
+    select(child, trans)%>% rename(trans_2=trans) #60 is the number of months from Jan 2007 until Jan 2012
   
   Ttree <- left_join(Ttree, trans_2, by=c("infected"="child"))
   
@@ -91,7 +91,7 @@ for (j in 1:30){#all trees in the transmission scenario
              sp_infected == "cattle") %>%
     filter(sp_infector == "badger" & tremoved_inf >= 60 |
              sp_infector == "cattle") %>% slice_head(n=1) %>%
-    select(child, trans)%>% rename(trans_5=trans)
+    select(child, trans)%>% rename(trans_5=trans) #60 is the number of months from Jan 2007 until Jan 2012
   
   Ttree <- left_join(Ttree, trans_5, by=c("infected"="child"))
   
@@ -102,7 +102,7 @@ for (j in 1:30){#all trees in the transmission scenario
              sp_infected == "cattle") %>%
     filter(sp_infector == "boar" & tremoved_inf >= 60 |
              sp_infector == "cattle") %>% slice_head(n=1) %>%
-    select(child, trans)%>% rename(trans_6=trans)
+    select(child, trans)%>% rename(trans_6=trans) #60 is the number of months from Jan 2007 until Jan 2012
   
   Ttree <- left_join(Ttree, trans_6, by=c("infected"="child"))
   
