@@ -14,7 +14,7 @@ library(fitdistrplus)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "A1"
+samp <- "A1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 tstart <- as.Date("01/01/07", "%d/%m/%y") #start of the outbreak
 
@@ -22,7 +22,7 @@ distr_gen <- NULL
 distr_samp <- NULL
 
 
-for (j in 1:30){#all trees in transmission scenario
+for (j in 1:30){ #all trees in transmission scenario
   #------------------------------------
   #Generation time distribution
   
