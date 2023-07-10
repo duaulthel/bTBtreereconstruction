@@ -1,13 +1,13 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(broom)
-library(MASS)
+library(tidyverse) #version 1.3.0
+library(broom) #version 0.7.2
+library(MASS) #version 7.3-53
 
 #------------------------------------
 ##Description:
-##Alternative transmission scenarios
+##Alternative transmission scenarios: S1 (single-host) and S4 (high mutation rate)
 ##Negative Binomial GLMM on the outbreak size indicator
 ##Comparison with subtree size
 
@@ -15,7 +15,7 @@ library(MASS)
 #------------------------------------
 #import tree size results from every method
 out <- NULL
-for (i in c("S1","S4")){
+for (i in c("S1","S4")){ #S1 (single-host) and S4 (high mutation rate)
   samp <- i
   
   out_o1 <- read_csv(paste0("./Outbreak_size/outbreaker_",samp,"_tree_size.csv"))
@@ -38,12 +38,12 @@ out <- out %>% filter(scenario==1) %>%
 
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc",
-                          out$scen_sim == "S4" ~ "CTrW_H")
+out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc", #meaning only cattle
+                          out$scen_sim == "S4" ~ "CTrW_H") #meaning cattle index, wild boars that transmit and high mutation rate
 
 #------------------------------------
 #Select transmission scenario 
-out <- out %>% filter(scen_sim=="Oc") #either "OC" or "CTrW_H"
+out <- out %>% filter(scen_sim=="Oc") #either "Oc" or "CTrW_H"
 
 #Implement the GLM on the outbreak size results
 model <- glm.nb(nb_sim 
@@ -52,7 +52,7 @@ model <- glm.nb(nb_sim
 
 summary(model) #and to get p-value
 
-#Create data.frame with results
+#Create data.frame with results (S11 Table)
 all_meth <- tidy(model, exponentiate = TRUE) %>% 
   mutate(IRR=round(estimate, 2),
          p.value=ifelse(p.value<0.001, "<0.001", round(p.value,3))) 
