@@ -2,7 +2,7 @@ rm(list=ls())
 
 #--------------------------------
 #packages
-library(tidyverse)
+library(tidyverse) #version 1.3.0
 
 #--------------------------------
 #Description:
@@ -13,13 +13,13 @@ library(tidyverse)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
 #--------------------------------
 
-for (j in 1:30){#j is the tree number
+for (j in 1:30){ #j is the tree number
   
   sim <- paste0(samp,"_",j)
   
@@ -56,7 +56,8 @@ for (j in 1:30){#j is the tree number
     prev <- read_csv(paste0("seqTrack_",samp,"_ssp.csv"))
     pres_spp <- rbind(prev, pres_spp)
     write_csv(pres_spp, paste0("seqTrack_",samp,"_ssp.csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(pres_spp, paste0("seqTrack_",samp,"_ssp.csv"))
   }
   
