@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(reshape2)
+library(tidyverse) #version 1.3.0
+library(reshape2) #version 0.8.8
 
 #------------------------------------
 ##Description:
@@ -12,10 +12,10 @@ library(reshape2)
 #------------------------------------
 #------------------------------------
 #Transmission scenario
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 #Number of sampling schemes
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
 #------------------------------------
 #Function that transforms matrix into a tree with the most likely infector
