@@ -1,8 +1,8 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(lubridate)
+library(tidyverse) #version 1.3.0
+library(lubridate) #version 1.7.9.2
 
 #------------------------------------
 ##Description:
@@ -12,10 +12,10 @@ library(lubridate)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S4 (high mutation rate)
 
 #------------------------------------
-non_se <- c("A1", "B1", "B2", "S1") 
+non_se <- c("A1", "B1", "B2", "S1") #do not change
 #tree_name of reference tree same as reconstructed tree name
 
 #For the reconstructed trees with a higher mutation rate
@@ -23,7 +23,7 @@ non_se <- c("A1", "B1", "B2", "S1")
 ref_tree <- case_when(samp %in% non_se ~ samp,
                       samp=="S4" ~ "B1")
 
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
 #--------------------------------
 #Not all trees converged, list of those that did:
@@ -35,7 +35,7 @@ nb_scheme <- ifelse(samp=="B1", 6, 1)
 
 #----------------------------------------------------------------------------
 
-for (j in c(1:2,4:6,8:9,11:16,18:19,22:29)){#j is the tree considered
+for (j in c(1:2,4:6,8:9,11:16,18:19,22:29)){ #change to list of trees that converged
   sim <- paste0(samp,"_",j) 
   
   Ttree <- read_csv(paste0("./Ttrees_",substr(ref_tree,1,1),"/Ttree_det_",ref_tree,"_",j,".csv")) #reference tree
@@ -128,7 +128,8 @@ for (j in c(1:2,4:6,8:9,11:16,18:19,22:29)){#j is the tree considered
     prev <- read_csv(paste0("transphylo_",samp,"_reff_pi.csv"))
     nb <- rbind(prev, nb)
     write_csv(nb, paste0("transphylo_",samp,"_reff_pi.csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(nb, paste0("transphylo_",samp,"_reff_pi.csv"))
   }
   
