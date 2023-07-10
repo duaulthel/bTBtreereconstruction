@@ -1,13 +1,13 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(TransPhylo)
-library(treeio)
-library(ape)
-library(tidyverse)
-library(lubridate)
-library(coda)
-library(lattice)
+library(TransPhylo) #version 1.4.5
+library(treeio) #version 1.14.1
+library(ape) #version 5.4-1 
+library(tidyverse) #version 1.3.0
+library(lubridate) #version 1.7.9.2
+library(coda) #version 0.19-4
+library(lattice) #version 0.20-41
 
 #------------------------------------
 ##Description:
@@ -16,13 +16,13 @@ library(lattice)
 #------------------------------------
 #------------------------------------
 #Transmission scenario
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 #Number of reference tree considered
-j <- 1
+j <- 1 #tree considered: number out of 30
 
 #Number of sampling schemes
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
 for (i in 1:nb_scheme){ #sampling schemes
   
@@ -68,7 +68,7 @@ for (i in 1:nb_scheme){ #sampling schemes
   #Medoid tree
   write_csv(tree, paste0("ttree_",samp,"_",j,"_",i,".csv"))
   
-  #Transmission matrix (estimated with the lattice package)
+  #Transmission matrix 
   WIW <- as.data.frame(computeMatWIW(res))
   write_csv(WIW, paste0("WIW_",samp,"_",j,"_",i,".csv"))
 }
