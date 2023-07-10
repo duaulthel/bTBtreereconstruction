@@ -1,11 +1,11 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(ape)
-library(phylotools)
-library(lubridate)
-library(tidyverse)
-library(adegenet)
+library(ape) #version 5.4-1
+library(phylotools) #version 0.2.2
+library(lubridate) #version 1.7.9.2
+library(tidyverse) #version 1.3.0
+library(adegenet) #version 2.1.3
 
 #------------------------------------
 ##Description:
@@ -17,12 +17,12 @@ library(adegenet)
 tstart <- as.Date("01/01/07", "%d/%m/%y")
 
 #Transmission scenario
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 #Number of sampling schemes
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 
-for (j in 1:30){#all trees in the transmission scenario
+for (j in 1:30){ #all trees in the transmission scenario
   sim <- paste0(samp,"_",j) 
   
   for (i in 1:nb_scheme){ #sampling schemes
