@@ -2,8 +2,8 @@ rm(list=ls())
 
 #--------------------------------
 #packages
-library(tidyverse)
-library(lubridate)
+library(tidyverse) #version 1.3.0
+library(lubridate) #version 1.7.9.2
 
 #--------------------------------
 #Description:
@@ -13,9 +13,9 @@ library(lubridate)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or B2 (badger index)
 
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 #--------------------------------
 
 #Not all trees converged, list of those that did:
@@ -25,7 +25,7 @@ nb_scheme <- ifelse(samp=="B1", 6, 1)
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 
-for (j in c(1:4,8,10:14,17,18,20:23,26:30)){#j is the tree number
+for (j in c(1:4,8,10:14,17,18,20:23,26:30)){ #change to list of trees that converged
   
   sim <- paste0(samp,"_",j)
   
@@ -81,7 +81,8 @@ for (j in c(1:4,8,10:14,17,18,20:23,26:30)){#j is the tree number
     prev <- read_csv(paste0("transphylo_",samp,"_index.csv"))
     index <- rbind(prev, index)
     write_csv(index, paste0("transphylo_",samp,"_index.csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(index, paste0("transphylo_",samp,"_index.csv"))
   }
   
