@@ -2,7 +2,7 @@ rm(list=ls())
 
 #--------------------------------
 #packages
-library(tidyverse)
+library(tidyverse) #version 1.3.0
 
 #--------------------------------
 #Description:
@@ -13,9 +13,9 @@ library(tidyverse)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "A1"
+samp <- "A1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 #--------------------------------
 
 #Not all trees converged, list of those that did:
@@ -27,14 +27,14 @@ nb_scheme <- ifelse(samp=="B1", 6, 1)
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 
-for (j in c(1:6,9,15:18,20,22:26,29)){ #j is the tree number
+for (j in c(1:6,9,15:18,20,22:26,29)){ #change to list of trees that converged
   
   sim <- paste0(samp,"_",j)
   
   #initialize output
   pres_spp <- NULL
 
-  for (i in 1:nb_scheme){#sampling schemes
+  for (i in 1:nb_scheme){ #sampling schemes
     
     #results from TransPhylo_medoid
     tree <- read_csv(paste0("./TransPhylo_",samp,"/ttree_",sim,"_",i,".csv")) 
@@ -61,7 +61,8 @@ for (j in c(1:6,9,15:18,20,22:26,29)){ #j is the tree number
     prev <- read_csv(paste0("transphylo_",samp,"_ssp.csv"))
     pres_spp <- rbind(prev, pres_spp)
     write_csv(pres_spp, paste0("transphylo_",samp,"_ssp.csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(pres_spp, paste0("transphylo_",samp,"_ssp.csv"))
   }
   
