@@ -14,10 +14,10 @@ library(fitdistrplus)
 #------------------------------------
 #------------------------------------
 #Transmission scenario considered
-samp <- "A1"
+samp <- "A1" #B1 (reference scenario) or A1 (dead-end), B2 (badger index), S1 (single-host), S4 (high mutation rate)
 
 
-for (j in 1:30){#all trees in the transmission scenario
+for (j in 1:30){ #all trees in the transmission scenario
   
   Ttree <- read_csv(paste0("./Ttrees_",substr(samp,1,1),"/Ttree_",samp,"_",j,".csv")) #reference tree
   
