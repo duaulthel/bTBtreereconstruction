@@ -1,9 +1,9 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(broom)
-library(lme4)
+library(tidyverse) #version 1.3.0
+library(broom) #version 0.7.2
+library(lme4) #version 1.1-29
 
 #------------------------------------
 ##Description:
@@ -13,7 +13,7 @@ library(lme4)
 #------------------------------------
 #------------------------------------
 #import parameter results from every method
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario)
 
 out_o1 <- read_csv(paste0("./mcmc/outbreaker_",samp,"_mcmc.csv"))
 out_o1$method <- "outbreaker2"
@@ -60,19 +60,19 @@ out <- full_join(out, pi_param, by=c("sim", "scenario", "method"))
 out <- out %>% mutate(R_sim=round(R_sim/median, 0))
 
 #Correct names for sampling scenarios
-out$scenario <- case_when(out$scenario == 1 ~ "A",
+out$scenario <- case_when(out$scenario == 1 ~ "Reference",
                           out$scenario == 2 ~ "T",
                           out$scenario == 4 ~ "SB",
                           out$scenario == 3 ~ "SW",
                           out$scenario == 5 ~ "T+SW",
                           out$scenario == 6 ~ "T+SB")
-out$scenario <- factor(out$scenario, levels=c("A", "T", "SB", "T+SB", "SW", "T+SW"))
+out$scenario <- factor(out$scenario, levels=c("Reference", "T", "SB", "T+SB", "SW", "T+SW"))
 
 #scen_sim stands for transmission scenarios
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- "CTrW"
+out$scen_sim <- "CTrW" #meaning cattle index and wild boars that transmit
 
 #Random effect variable
 out$sim <- as.factor(out$sim)
@@ -100,6 +100,6 @@ ctab <- cbind(est=fixef(model),cc)
 #Exponentiate results to get IRR
 rtab <- exp(ctab)
 
-#Create data.frame with results
+#Create data.frame with results (Table 4)
 tab <- as.data.frame(round(rtab, 2))
 
