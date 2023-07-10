@@ -2,7 +2,7 @@ rm(list=ls())
 
 #--------------------------------
 #packages
-library(tidyverse)
+library(tidyverse) #version 1.3.0
 
 #--------------------------------
 #Description:
@@ -11,9 +11,9 @@ library(tidyverse)
 
 #------------------------------------
 #------------------------------------
-samp <- "B1"
+samp <- "B1" #B1 (reference scenario) or B2 (badger index)
 
-nb_scheme <- ifelse(samp=="B1", 6, 1)
+nb_scheme <- ifelse(samp=="B1", 6, 1) #do not change B1, only scenario with 6 schemes
 #------------------------------------
 
 for (j in 1:30){ #j is the tree number
@@ -71,7 +71,8 @@ for (j in 1:30){ #j is the tree number
     prev <- read_csv(paste0("outbreaker_",samp,"_index.csv"))
     index <- rbind(prev, index)
     write_csv(index, paste0("outbreaker_",samp,"_index.csv"))
-  }else{ #if this is the first tree, write new file
+  }
+  else{ #if this is the first tree, write new file
     write_csv(index, paste0("outbreaker_",samp,"_index.csv"))
   }
   
