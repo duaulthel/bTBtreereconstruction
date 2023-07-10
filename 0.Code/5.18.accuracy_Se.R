@@ -1,19 +1,19 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(broom)
+library(tidyverse) #version 1.3.0
+library(broom) #version 0.7.2
 
 #------------------------------------
 ##Description:
-##Alternative transmission scenarios
+##Alternative transmission scenarios: S1 (single-host) and S4 (high mutation rate)
 ##Binomial GLM on the accuracy indicator
 
 #------------------------------------
 #------------------------------------
 #import accuracy results from every method
 out <- NULL
-for (i in c("S1","S4")){
+for (i in c("S1","S4")){ #S1 (single-host) and S4 (high mutation rate)
   samp <- i
   out_s1 <- read_csv(paste0("./Accuracy/seqTrack_",samp,"_acc.csv"))
   out_s1$method <- "seqTrack"
@@ -38,11 +38,11 @@ out <- out %>% filter(sim %in% indice$sim) %>%
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc",
-                          out$scen_sim == "S4" ~ "CTrW_H")
+out$scen_sim <- case_when(out$scen_sim == "S1" ~ "Oc", #meaning only cattle
+                          out$scen_sim == "S4" ~ "CTrW_H") #meaning cattle index, wild boars that transmit and high mutation rate
 
 #------------------------------------
-#Table with results from all methods
+#Table with results from all methods (S8 Table)
 tab <- out %>% 
   mutate(prop=nb_acc/(nb_acc+nb_non_acc)*100)
 
@@ -59,7 +59,7 @@ tab <- tab %>% pivot_wider(names_from=scen_sim, values_from=res)
 write_csv(tab, "res.csv")
 #------------------------------------
 #Select transmission scenario 
-out <- out %>% filter(scen_sim=="Oc") #either "OC" or "CTrW_H"
+out <- out %>% filter(scen_sim=="Oc") #either "Oc" or "CTrW_H"
 
 #Implement the GLM on the accuracy results
 model <- glm(cbind(nb_acc, nb_non_acc) 
@@ -69,7 +69,7 @@ model <- glm(cbind(nb_acc, nb_non_acc)
 
 summary(model)
 
-#Calculate 95% confidence interval and exponentiate to get Odds Ratio
+#Calculate 95% confidence interval and exponentiate to get Odds Ratio (S9 Table)
 all_meth <- tidy(model, conf.int = TRUE, exponentiate = TRUE) %>%
   mutate(OR=round(estimate, 2),
          IC=paste(round(conf.low,2), round(conf.high,2), sep="-"),
