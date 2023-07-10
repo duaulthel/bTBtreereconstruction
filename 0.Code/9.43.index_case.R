@@ -1,9 +1,9 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(broom)
-library(lme4)
+library(tidyverse) #version 1.3.0
+library(broom) #version 0.7.2
+library(lme4) #version 1.1-29
 
 #------------------------------------
 ##Description:
@@ -13,7 +13,7 @@ library(lme4)
 #------------------------------------
 #import index case results from every method
 out <- NULL
-for (i in c("B2","B1")){
+for (i in c("B2","B1")){ #B1 (reference scenario) or B2 (badger index)
   samp <- i
   out_s1 <- read_csv(paste0("./Index_case/seqTrack_",samp,"_index.csv"))
   out_s1$method <- "seqTrack"
@@ -38,26 +38,26 @@ class(out$scenario) <- "character"
 out$index <- ifelse(out$index==1, T, F)
 
 #Correct names for sampling scenarios
-out$scenario <- case_when(out$scenario == 1 ~ "A",
+out$scenario <- case_when(out$scenario == 1 ~ "Reference",
                           out$scenario == 2 ~ "T",
                           out$scenario == 4 ~ "SB",
                           out$scenario == 3 ~ "SW",
                           out$scenario == 5 ~ "T+SW",
                           out$scenario == 6 ~ "T+SB")
-out$scenario <- factor(out$scenario, levels=c("A", "T", "SB", "T+SB", "SW", "T+SW"))
+out$scenario <- factor(out$scenario, levels=c("Reference", "T", "SB", "T+SB", "SW", "T+SW"))
 
 #scen_sim stands for transmission scenarios
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "B2" ~ "BTrW",
-                          out$scen_sim == "B1" ~ "CTrW")
+out$scen_sim <- case_when(out$scen_sim == "B2" ~ "BTrW", #meaning badger index and wild boars that transmit
+                          out$scen_sim == "B1" ~ "CTrW") #meaning cattle index and wild boars that transmit
 
 #Random effect variable
 out$sim <- as.factor(out$sim)
 
 #------------------------------------
-#Table with results from all methods
+#Table with results from all methods (S4 Table) 
 tab <- out %>% 
   mutate(index=ifelse(index==T, 1, 0),
          n=1)
