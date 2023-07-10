@@ -1,10 +1,10 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(epitrix)
-library(lubridate)
-library(fitdistrplus)
+library(tidyverse) #version 1.3.0
+library(epitrix) #version 0.2.2
+library(lubridate) #version 1.7.9.2
+library(fitdistrplus) #version 1.1-6
 
 #------------------------------------
 ##Description:
