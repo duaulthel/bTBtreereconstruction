@@ -99,5 +99,5 @@ ctab <- cbind(est=fixef(model2),cc)
 #Exponentiate results to get IRR
 rtab <- exp(ctab)
 
-#Create data.frame with results (S2 Appendix)
+#Create data.frame with results (Table 3)
 tab <- as.data.frame(round(rtab, 2))
