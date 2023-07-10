@@ -22,7 +22,7 @@ for (j in 1:30){ #all trees in transmission scenario
   #seq_2: no wildlife before 2012 (T)
   seq_2 <- seq_1 %>% filter(sp == "boar" & tremoved >= 60 |
                         sp == "badger" & tremoved >= 60 |
-                        sp == "cattle")
+                        sp == "cattle") #60 is the number of months from Jan 2007 until Jan 2012
 
   #seq_3: no boars (SW)
   seq_3 <- seq_1 %>% filter(sp == "badger" | sp == "cattle")
