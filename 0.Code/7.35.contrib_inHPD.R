@@ -1,20 +1,20 @@
 rm(list=ls())
 #------------------------------------
 #packages
-library(tidyverse)
-library(ggplot2)
-library(tidytext)
+library(tidyverse) #version 1.3.0
+library(ggplot2) #version 3.3.5
+library(tidytext) #version 0.4.1
 
 #------------------------------------
 ##Description:
-##Estimate HPD interval for host contribution
+##Estimate HPD interval for host contribution (Fig 4, 6 and 8)
 ##Comparison with reference tree
 
 #------------------------------------
 #------------------------------------
 #import parameter results from every method
 out <- NULL
-for (i in c("B1", "A1", "S4")){
+for (i in c("B1", "A1", "S4")){ #B1 (reference scenario), A1 (dead-end) and S4 (high mutation rate)
   samp <- i
   
   out_o1 <- read_csv(paste0("./mcmc/outbreaker_",samp,"_mcmc.csv"))
@@ -41,7 +41,7 @@ colnames(pi_param) [4] <- "sup"
 
 #import host contribution results from every method
 out <- NULL
-for (i in c("B1", "A1", "S4")){
+for (i in c("B1", "A1", "S4")){ #B1 (reference scenario), A1 (dead-end) and S4 (high mutation rate)
   samp <- i
   
   out_o1 <- read_csv(paste0("./Host_contribution/outbreaker_",samp,"_reff_pi.csv"))
@@ -87,9 +87,9 @@ out$scenario <- factor(out$scenario, levels=c("Reference", "T", "SB", "T+SB", "S
 out <- out %>% mutate(scen_sim=substr(sim, 1, 2))
 
 #Correct names for transmission scenarios
-out$scen_sim <- case_when(out$scen_sim == "A1" ~ "CNTrW",
-                          out$scen_sim == "B1" ~ "CTrW",
-                          out$scen_sim == "S4" ~ "CTrW_H")
+out$scen_sim <- case_when(out$scen_sim == "A1" ~ "CNTrW", #meaning cattle index and wild boars that did NOT transmit
+                          out$scen_sim == "B1" ~ "CTrW", #meaning cattle index and wild boars that transmit
+                          out$scen_sim == "S4" ~ "CTrW_H") #meaning cattle index, wild boars that transmit and high rate
 
 #Is the real contribution in the 95%HPD?
 out <- out %>%
@@ -112,20 +112,20 @@ fig_1 <- out %>% filter(scen_sim=="CTrW") %>%
 
 fig_1$sp_infector <- factor(fig_1$sp_infector, levels=c("cattle", "badger", "boar"))
 
-(A <- ggplot(data=fig_1)+
+A <- ggplot(data=fig_1)+
     geom_errorbar(aes(y=reorder_within(sim, R, within=sp_infector), xmin=R_sim_sup, xmax=R_sim_inf, color=correct))+
     geom_point(aes(y=reorder_within(sim, R, within=sp_infector), x= R, color = correct))+
     facet_grid(sp_infector~method, scales="free_y")+
     scale_x_log10()+
     scale_color_manual(name="Estimation", values=strans)+
     theme_bw(base_size=11)+
-    labs(x="Number of transmission events", y=""))
+    labs(x="Number of transmission events", y="")
 
 A + theme(axis.text.y=element_blank(),  
           axis.ticks.y=element_blank(),
           legend.position="bottom")
 
-ggsave("All_sp_ref_within.tiff",device="tiff", dpi="print", width=17, height=15, units="cm",  compression="lzw", scale=1)
+ggsave("All_sp_ref_within.tiff",device="tiff", dpi="print", width=17, height=15, units="cm",  compression="lzw", scale=1) #Fig 4
 
 
 #------------------------------------
@@ -134,20 +134,21 @@ fig_2 <- out %>% filter(scen_sim=="CTrW_H") %>% filter(!is.na(sp_infector))
 
 fig_2$sp_infector <- factor(fig_2$sp_infector, levels=c("cattle", "badger", "boar"))
 
-(A <- ggplot(data=fig_2)+
+A <- ggplot(data=fig_2)+
     geom_errorbar(aes(y=reorder_within(sim, R, within=sp_infector), xmin=R_sim_sup, xmax=R_sim_inf, color=correct))+
     geom_point(aes(y=reorder_within(sim, R, within=sp_infector), x= R, color = correct))+
     facet_grid(sp_infector~method, scales="free_y")+
     scale_x_continuous()+
     scale_color_manual(name="Estimation", values=strans)+
     theme_bw(base_size=11)+
-    labs(x="Number of transmission events", y=""))
+    labs(x="Number of transmission events", y="")
 
 A + theme(axis.text.y=element_blank(),  
           axis.ticks.y=element_blank(),
           legend.position="bottom")
 
 ggsave("Host_contrib_high_mutation.tiff",device="tiff", dpi="print", width=17, height=15, units="cm",  compression="lzw", scale=1)
+#Fig 6
 
 #------------------------------------
 #Select dead-end transmission scenario 
@@ -156,17 +157,18 @@ fig_3 <- out %>% filter(scen_sim=="CNTrW") %>% filter(scenario=="Reference") %>%
 
 fig_3$sp_infector <- factor(fig_3$sp_infector, levels=c("cattle", "badger", "boar"))
 
-(A <- ggplot(data=fig_3)+
+A <- ggplot(data=fig_3)+
     geom_errorbar(aes(y=reorder_within(sim, R, within=sp_infector), xmin=R_sim_sup, xmax=R_sim_inf, color=correct))+
     geom_point(aes(y=reorder_within(sim, R, within=sp_infector), x= R, color = correct))+
     facet_grid(sp_infector~method, scales="free_y")+
     scale_x_continuous()+
     scale_color_manual(name="Estimation", values=strans)+
     theme_bw(base_size=11)+
-    labs(x="Number of transmission events", y=""))
+    labs(x="Number of transmission events", y="")
 
 A + theme(axis.text.y=element_blank(),  
           axis.ticks.y=element_blank(),
           legend.position="bottom")
 
 ggsave("Host_contrib_dead_end.tiff",device="tiff", dpi="print", width=17, height=15, units="cm",  compression="lzw", scale=1)
+#Fig 8
